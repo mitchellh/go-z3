@@ -13,6 +13,15 @@ type AST struct {
 	rawAST C.Z3_ast
 }
 
+// String returns a human-friendly string version of the AST.
+func (a *AST) String() string {
+	return C.GoString(C.Z3_ast_to_string(a.rawCtx, a.rawAST))
+}
+
+//-------------------------------------------------------------------
+// Var, Literal Creation
+//-------------------------------------------------------------------
+
 // Const declares a variable. It is called "Const" since internally
 // this is equivalent to create a function that always returns a constant
 // value. From an initial user perspective this may be confusing but go-z3
@@ -24,10 +33,19 @@ func (c *Context) Const(s *Symbol, typ *Sort) *AST {
 	}
 }
 
-// String returns a human-friendly string version of the AST.
-func (a *AST) String() string {
-	return C.GoString(C.Z3_ast_to_string(a.rawCtx, a.rawAST))
+// Int creates an integer type.
+//
+// Maps: Z3_mk_int
+func (c *Context) Int(v int, typ *Sort) *AST {
+	return &AST{
+		rawCtx: c.raw,
+		rawAST: C.Z3_mk_int(c.raw, C.int(v), typ.rawSort),
+	}
 }
+
+//-------------------------------------------------------------------
+// Operations
+//-------------------------------------------------------------------
 
 // Xor creates an AST node representing a xor a2.
 //

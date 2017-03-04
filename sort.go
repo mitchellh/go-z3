@@ -16,3 +16,11 @@ func (c *Context) BoolSort() *Sort {
 		rawSort: C.Z3_mk_bool_sort(c.raw),
 	}
 }
+
+// IntSort returns the int type.
+func (c *Context) IntSort() *Sort {
+	return &Sort{
+		rawCtx:  c.raw,
+		rawSort: C.Z3_mk_int_sort(c.raw),
+	}
+}
