@@ -1,5 +1,10 @@
 package z3
 
+import (
+	"unsafe"
+)
+
+// #include <stdlib.h>
 // #include "go-z3.h"
 import "C"
 
@@ -42,9 +47,13 @@ func (c *Config) Close() error {
 
 // SetParamValue sets the parameters for a Config. See the Config docs.
 func (c *Config) SetParamValue(k, v string) {
-	// TODO: Do I free these?
 	ck := C.CString(k)
 	cv := C.CString(v)
+
+	// We free the strings since they're not actually stored
+	defer C.free(unsafe.Pointer(ck))
+	defer C.free(unsafe.Pointer(cv))
+
 	C.Z3_set_param_value(c.raw, ck, cv)
 }
 
