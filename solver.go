@@ -33,3 +33,29 @@ func (s *Solver) Close() error {
 	C.Z3_solver_dec_ref(s.rawCtx, s.rawSolver)
 	return nil
 }
+
+// Assert asserts a constraint onto the Solver.
+//
+// Maps to: Z3_solver_assert
+func (s *Solver) Assert(a *AST) {
+	C.Z3_solver_assert(s.rawCtx, s.rawSolver, a.rawAST)
+}
+
+// Check checks if the currently set formula is consistent.
+//
+// Maps to: Z3_solver_check
+func (s *Solver) Check() LBool {
+	return LBool(C.Z3_solver_check(s.rawCtx, s.rawSolver))
+}
+
+// Model returns the last model from a Check.
+//
+// Maps to: Z3_solver_get_model
+func (s *Solver) Model() *Model {
+	m := &Model{
+		rawCtx:   s.rawCtx,
+		rawModel: C.Z3_solver_get_model(s.rawCtx, s.rawSolver),
+	}
+	m.IncRef()
+	return m
+}
