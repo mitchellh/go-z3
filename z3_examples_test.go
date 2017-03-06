@@ -4,6 +4,47 @@ import (
 	"fmt"
 )
 
+// From C examples: demorgan
+func ExampleDemorgan() {
+	// Create the context
+	config := NewConfig()
+	ctx := NewContext(config)
+	config.Close()
+	defer ctx.Close()
+
+	// Create a couple variables
+	x := ctx.Const(ctx.Symbol("x"), ctx.BoolSort())
+	y := ctx.Const(ctx.Symbol("y"), ctx.BoolSort())
+
+	// Final goal: !(x && y) == (!x || !y)
+	// Built incrementally so its clearer
+
+	// !(x && y)
+	not_x_and_y := x.And(y).Not()
+
+	// (!x || !y)
+	not_x_or_not_y := x.Not().Or(y.Not())
+
+	// Conjecture and negated
+	conj := not_x_and_y.Iff(not_x_or_not_y)
+	negConj := conj.Not()
+
+	// Create the solver
+	s := ctx.NewSolver()
+	defer s.Close()
+
+	// Assert the constraints
+	s.Assert(negConj)
+
+	if v := s.Check(); v == False {
+		fmt.Println("DeMorgan is valid")
+		return
+	}
+
+	// Output:
+	// DeMorgan is valid
+}
+
 // From C examples: find_model_example2
 func ExampleFindModel2() {
 	// Create the context
