@@ -21,6 +21,28 @@ func (m *Model) Close() error {
 	return nil
 }
 
+// Eval evaluates the given AST within the model. This can be used to get
+// the assignment of an AST. This will return nil if evaluation failed.
+//
+// For example:
+//
+//   x := ctx.Const(ctx.Symbol("x"), ctx.IntSort())
+//   // ... further solving
+//   m.Eval(x) => x's value
+//
+// Maps: Z3_model_eval
+func (m *Model) Eval(c *AST) *AST {
+	var result C.Z3_ast
+	if C.Z3_model_eval(m.rawCtx, m.rawModel, c.rawAST, C.Z3_TRUE, &result) != C.Z3_TRUE {
+		return nil
+	}
+
+	return &AST{
+		rawCtx: m.rawCtx,
+		rawAST: result,
+	}
+}
+
 // IncRef increases the reference count of this model. This is advanced,
 // you probably don't need to use this.
 func (m *Model) IncRef() {

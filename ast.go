@@ -18,6 +18,11 @@ func (a *AST) String() string {
 	return C.GoString(C.Z3_ast_to_string(a.rawCtx, a.rawAST))
 }
 
+// Z3FuncDecl returns the raw Z3_func_decl value for this AST.
+func (a *AST) Z3FuncDecl() C.Z3_func_decl {
+	return C.Z3_to_func_decl(a.rawCtx, a.rawAST)
+}
+
 //-------------------------------------------------------------------
 // Var, Literal Creation
 //-------------------------------------------------------------------
@@ -61,4 +66,16 @@ func (c *Context) False() *AST {
 		rawCtx: c.raw,
 		rawAST: C.Z3_mk_false(c.raw),
 	}
+}
+
+//-------------------------------------------------------------------
+// Value Readers
+//-------------------------------------------------------------------
+
+// Int gets the integer value of this AST. The value must be able to fit
+// into a machine integer.
+func (a *AST) Int() int {
+	var dst C.int
+	C.Z3_get_numeral_int(a.rawCtx, a.rawAST, &dst)
+	return int(dst)
 }
