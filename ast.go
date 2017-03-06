@@ -43,16 +43,22 @@ func (c *Context) Int(v int, typ *Sort) *AST {
 	}
 }
 
-//-------------------------------------------------------------------
-// Operations
-//-------------------------------------------------------------------
-
-// Xor creates an AST node representing a xor a2.
+// True creates the value "true".
 //
-// a and a2 must be part of the same Context and be boolean types.
-func (a *AST) Xor(a2 *AST) *AST {
+// Maps: Z3_mk_true
+func (c *Context) True() *AST {
 	return &AST{
-		rawCtx: a.rawCtx,
-		rawAST: C.Z3_mk_xor(a.rawCtx, a.rawAST, a2.rawAST),
+		rawCtx: c.raw,
+		rawAST: C.Z3_mk_true(c.raw),
+	}
+}
+
+// False creates the value "false".
+//
+// Maps: Z3_mk_false
+func (c *Context) False() *AST {
+	return &AST{
+		rawCtx: c.raw,
+		rawAST: C.Z3_mk_false(c.raw),
 	}
 }

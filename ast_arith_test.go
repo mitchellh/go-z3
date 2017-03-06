@@ -24,3 +24,41 @@ func TestASTAdd(t *testing.T) {
 		t.Fatalf("bad:\n%s", actual)
 	}
 }
+
+func TestASTLt(t *testing.T) {
+	config := NewConfig()
+	defer config.Close()
+	ctx := NewContext(config)
+	defer ctx.Close()
+
+	// Create an int
+	x := ctx.Const(ctx.Symbol("x"), ctx.IntSort())
+	y := ctx.Const(ctx.Symbol("y"), ctx.IntSort())
+
+	// Add
+	raw := x.Lt(y)
+
+	actual := raw.String()
+	if actual != "(< x y)" {
+		t.Fatalf("bad:\n%s", actual)
+	}
+}
+
+func TestASTGt(t *testing.T) {
+	config := NewConfig()
+	defer config.Close()
+	ctx := NewContext(config)
+	defer ctx.Close()
+
+	// Create an int
+	x := ctx.Const(ctx.Symbol("x"), ctx.IntSort())
+	y := ctx.Const(ctx.Symbol("y"), ctx.IntSort())
+
+	// Add
+	raw := x.Gt(y)
+
+	actual := raw.String()
+	if actual != "(> x y)" {
+		t.Fatalf("bad:\n%s", actual)
+	}
+}

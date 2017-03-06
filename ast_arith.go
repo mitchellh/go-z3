@@ -26,26 +26,6 @@ func (a *AST) Add(args ...*AST) *AST {
 	}
 }
 
-// Not creates an AST node representing not(a)
-//
-// Maps to: Z3_mk_not
-func (a *AST) Not() *AST {
-	return &AST{
-		rawCtx: a.rawCtx,
-		rawAST: C.Z3_mk_not(a.rawCtx, a.rawAST),
-	}
-}
-
-// Eq creates a "equal" comparison.
-//
-// Maps to: Z3_mk_eq
-func (a *AST) Eq(a2 *AST) *AST {
-	return &AST{
-		rawCtx: a.rawCtx,
-		rawAST: C.Z3_mk_eq(a.rawCtx, a.rawAST, a2.rawAST),
-	}
-}
-
 // Lt creates a "less than" comparison.
 //
 // Maps to: Z3_mk_lt
