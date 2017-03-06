@@ -18,9 +18,14 @@ func (a *AST) String() string {
 	return C.GoString(C.Z3_ast_to_string(a.rawCtx, a.rawAST))
 }
 
-// Z3FuncDecl returns the raw Z3_func_decl value for this AST.
-func (a *AST) Z3FuncDecl() C.Z3_func_decl {
-	return C.Z3_to_func_decl(a.rawCtx, a.rawAST)
+// DeclName returns the name of a declaration. The AST value must be a
+// func declaration for this to work.
+func (a *AST) DeclName() *Symbol {
+	return &Symbol{
+		rawCtx: a.rawCtx,
+		rawSymbol: C.Z3_get_decl_name(
+			a.rawCtx, C.Z3_to_func_decl(a.rawCtx, a.rawAST)),
+	}
 }
 
 //-------------------------------------------------------------------
