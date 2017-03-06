@@ -16,7 +16,14 @@ func NewContext(c *Config) *Context {
 
 // Close frees the memory associated with this context.
 func (c *Context) Close() error {
+	// Clear context
 	C.Z3_del_context(c.raw)
+
+	// Clear error handling
+	errorHandlerMapLock.Lock()
+	delete(errorHandlerMap, c.raw)
+	errorHandlerMapLock.Unlock()
+
 	return nil
 }
 
