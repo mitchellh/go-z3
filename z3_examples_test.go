@@ -45,8 +45,10 @@ func ExampleFindModel2() {
 
 		// Get the resulting model:
 		m := s.Model()
-		fmt.Printf("Model:\n%s", m)
+		assignments := m.Assignments()
 		m.Close()
+		fmt.Printf("x = %s\n", assignments["x"])
+		fmt.Printf("y = %s\n", assignments["y"])
 	}
 
 	// Create some new assertions
@@ -65,22 +67,18 @@ func ExampleFindModel2() {
 
 		// Get the resulting model:
 		m := s.Model()
-		fmt.Printf("Model:\n%s", m)
+		assignments := m.Assignments()
 		m.Close()
+		fmt.Printf("x = %s\n", assignments["x"])
+		fmt.Printf("y = %s", assignments["y"])
 	}
 
 	// Output:
 	// Solving part 1
-	// Model:
-	// x -> 0
-	// k!2 -> (- 1)
-	// k!1 -> 0
-	// y -> 1
+	// x = 0
+	// y = 1
 	//
 	// Solving part 2
-	// Model:
-	// k!1 -> 0
-	// k!2 -> (- 1)
-	// y -> 1
-	// x -> 0
+	// x = 0
+	// y = 1
 }
