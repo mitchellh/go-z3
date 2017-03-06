@@ -46,6 +46,26 @@ func (a *AST) Eq(a2 *AST) *AST {
 	}
 }
 
+// Ite creates an AST node representing if a then a2 else a3.
+//
+// a and a2 must be part of the same Context and be boolean types.
+func (a *AST) Ite(a2, a3 *AST) *AST {
+	return &AST{
+		rawCtx: a.rawCtx,
+		rawAST: C.Z3_mk_ite(a.rawCtx, a.rawAST, a2.rawAST, a3.rawAST),
+	}
+}
+
+// Iff creates an AST node representing a iff a2.
+//
+// a and a2 must be part of the same Context and be boolean types.
+func (a *AST) Iff(a2 *AST) *AST {
+	return &AST{
+		rawCtx: a.rawCtx,
+		rawAST: C.Z3_mk_iff(a.rawCtx, a.rawAST, a2.rawAST),
+	}
+}
+
 // Implies creates an AST node representing a implies a2.
 //
 // a and a2 must be part of the same Context and be boolean types.
