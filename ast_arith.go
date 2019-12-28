@@ -74,7 +74,7 @@ func (a *AST) Lt(a2 *AST) *AST {
 	}
 }
 
-// Le creates a "less than" comparison.
+// Le creates a "less or equal than" comparison.
 //
 // Maps to: Z3_mk_le
 func (a *AST) Le(a2 *AST) *AST {
@@ -94,7 +94,7 @@ func (a *AST) Gt(a2 *AST) *AST {
 	}
 }
 
-// Ge creates a "less than" comparison.
+// Ge creates a "greater or equal than" comparison.
 //
 // Maps to: Z3_mk_ge
 func (a *AST) Ge(a2 *AST) *AST {

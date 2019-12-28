@@ -48,9 +48,10 @@ You can customize the Z3 compilation by setting a couple environmental
 variables prior to calling `make`:
 
   * `Z3_REF` is the git ref that will be checked out for Z3. This
-    defaults to to a recently tagged version. It is recommended that you
+    defaults to to `master`. It is recommended that you
     explicitly set this to a ref that works for you to avoid any changes
-    in this library later.
+    in this library later. The tag `z3-4.5.0` is proven to work with 
+    the current version. 
 
 ## Usage
 

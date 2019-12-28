@@ -11,3 +11,15 @@ const (
 	Undef       = C.Z3_L_UNDEF
 	True        = C.Z3_L_TRUE
 )
+
+func (b LBool) String() string {
+	if b == False {
+		return "False"
+	} else if b == Undef {
+		return "Undef"
+	} else if b == True {
+		return "True"
+	} else {
+		panic("Unknown LBool")
+	}
+}
