@@ -1,6 +1,12 @@
 package z3
 
 // #include "go-z3.h"
+/*
+int _Z3_model_eval(Z3_context c, Z3_model m, Z3_ast t, int model_completion, Z3_ast * v) {
+  return Z3_model_eval(c, m, t, (bool) model_completion, v);
+}
+
+*/
 import "C"
 
 // Model represents a model from a solver.
@@ -34,7 +40,7 @@ func (m *Model) String() string {
 // Maps: Z3_model_eval
 func (m *Model) Eval(c *AST) *AST {
 	var result C.Z3_ast
-	if C.Z3_model_eval(m.rawCtx, m.rawModel, c.rawAST, C.Z3_TRUE, &result) != C.Z3_TRUE {
+	if C._Z3_model_eval(m.rawCtx, m.rawModel, c.rawAST, 1, &result) == 0 {
 		return nil
 	}
 

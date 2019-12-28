@@ -29,7 +29,7 @@ func TestModelAssignments(t *testing.T) {
 	// Solve
 	result := s.Check()
 	if result != True {
-		t.Fatalf("bad: %s", result)
+		t.Fatalf("bad: %v", result)
 	}
 
 	// Get the model
@@ -71,7 +71,7 @@ func TestModelEval(t *testing.T) {
 	// Solve
 	result := s.Check()
 	if result != True {
-		t.Fatalf("bad: %s", result)
+		t.Fatalf("bad: %v", result)
 	}
 
 	// Get the model

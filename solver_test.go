@@ -29,7 +29,7 @@ func TestSolver(t *testing.T) {
 	// Solve
 	result := s.Check()
 	if result != True {
-		t.Fatalf("bad: %s", result)
+		t.Fatalf("bad: %v", result)
 	}
 
 	// Get the model

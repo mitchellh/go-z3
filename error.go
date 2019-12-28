@@ -50,7 +50,7 @@ func (c *Context) SetErrorHandler(f ErrorHandler) {
 //
 // Maps: Z3_get_error_msg_ex
 func (c *Context) Error(code ErrorCode) string {
-	return C.GoString(C.Z3_get_error_msg_ex(c.raw, C.Z3_error_code(code)))
+	return C.GoString(C.Z3_get_error_msg(c.raw, C.Z3_error_code(code)))
 }
 
 //export goZ3ErrorHandler
